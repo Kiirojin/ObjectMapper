@@ -134,7 +134,7 @@ class MapContextTests: XCTestCase {
 	
 	// MARK: ImmutableMappable
 	// MARK: Single
-	func testImmutableMappingWithContext() {
+	func testImmatableMappingWithContext() {
 		let JSON = ["name": "Anton"]
 		let context = ImmutableContext(isDeveloper: true)
 		
@@ -145,7 +145,7 @@ class MapContextTests: XCTestCase {
 		XCTAssertEqual(person?.isDeveloper ?? !context.isDeveloper, context.isDeveloper)
 	}
 	
-	func testImmutableMappingWithContextViaMappableExtension() {
+	func testImmatableMappingWithContextViaMappableExtension() {
 		let JSON = ["name": "Anton"]
 		let context = ImmutableContext(isDeveloper: true)
 		
@@ -155,7 +155,7 @@ class MapContextTests: XCTestCase {
 		XCTAssertEqual(person?.isDeveloper ?? !context.isDeveloper, context.isDeveloper)
 	}
 	
-	func testImmutableMappingWithoutContext() {
+	func testImmatableMappingWithoutContext() {
 		let JSON = ["name": "Anton"]
 		
 		do {

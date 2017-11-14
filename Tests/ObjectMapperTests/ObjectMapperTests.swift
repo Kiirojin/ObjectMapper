@@ -54,15 +54,11 @@ class ObjectMapperTests: XCTestCase {
         let drinker = true
         let smoker = false
 		let sex: Sex = .Female
-		let canDrive = true
-		let subUserJSON = "{\"identifier\" : \"user8723\", \"drinker\" : true, \"age\": 17, \"username\" : \"sub user\", \"canDrive\": \(canDrive) }"
+        let subUserJSON = "{\"identifier\" : \"user8723\", \"drinker\" : true, \"age\": 17, \"username\" : \"sub user\" }"
         
-		let userJSONString = "{\"username\":\"\(username)\",\"identifier\":\"\(identifier)\",\"photoCount\":\(photoCount),\"age\":\(age),\"drinker\":\(drinker),\"smoker\":\(smoker), \"sex\":\"\(sex.rawValue)\", \"canDrive\": \(canDrive), \"arr\":[ \"bla\", true, 42 ], \"dict\":{ \"key1\" : \"value1\", \"key2\" : false, \"key3\" : 142 }, \"arrOpt\":[ \"bla\", true, 42 ], \"dictOpt\":{ \"key1\" : \"value1\", \"key2\" : false, \"key3\" : 142 }, \"weight\": \(weight), \"float\": \(float), \"friend\": \(subUserJSON), \"friendDictionary\":{ \"bestFriend\": \(subUserJSON)}, \"friends\": [\(subUserJSON), \(subUserJSON)]}"
+        let userJSONString = "{\"username\":\"\(username)\",\"identifier\":\"\(identifier)\",\"photoCount\":\(photoCount),\"age\":\(age),\"drinker\":\(drinker),\"smoker\":\(smoker), \"sex\":\"\(sex.rawValue)\", \"arr\":[ \"bla\", true, 42 ], \"dict\":{ \"key1\" : \"value1\", \"key2\" : false, \"key3\" : 142 }, \"arrOpt\":[ \"bla\", true, 42 ], \"dictOpt\":{ \"key1\" : \"value1\", \"key2\" : false, \"key3\" : 142 }, \"weight\": \(weight), \"float\": \(float), \"friend\": \(subUserJSON), \"friendDictionary\":{ \"bestFriend\": \(subUserJSON)}}"
 
-		guard let user = userMapper.map(JSONString: userJSONString) else {
-			XCTFail()
-			return
-		}
+		let user = userMapper.map(JSONString: userJSONString)!
 		
 		XCTAssertNotNil(user)
 		XCTAssertEqual(username, user.username)
@@ -74,10 +70,6 @@ class ObjectMapperTests: XCTestCase {
 		XCTAssertEqual(drinker, user.drinker)
 		XCTAssertEqual(smoker, user.smoker)
 		XCTAssertEqual(sex, user.sex)
-		XCTAssertEqual(canDrive, user.canDrive)
-		XCTAssertNotNil(user.friends)
-		XCTAssertEqual(user.friends?.count, 2)
-		XCTAssertEqual(user.friends?[1].canDrive, canDrive)
 
 		//print(Mapper().toJSONString(user, prettyPrint: true))
     }
@@ -94,9 +86,9 @@ class ObjectMapperTests: XCTestCase {
 		let sex: Sex = .Female
 		let subUserJSON = "{\"identifier\" : \"user8723\", \"drinker\" : true, \"age\": 17, \"username\" : \"sub user\" }"
 		
-		let userJSONString = "{\"username\":\"\(username)\",\"identifier\":\"\(identifier)\",\"photoCount\":\(photoCount),\"age\":\(age),\"drinker\":\(drinker),\"smoker\":\(smoker), \"sex\":\"\(sex.rawValue)\", \"arr\":[ \"bla\", true, 42 ], \"dict\":{ \"key1\" : \"value1\", \"key2\" : false, \"key3\" : 142 }, \"arrOpt\":[ \"bla\", true, 42 ], \"dictOpt\":{ \"key1\" : \"value1\", \"key2\" : false, \"key3\" : 142 }, \"weight\": \(weight), \"float\": \(float), \"friend\": \(subUserJSON), \"friendDictionary\":{ \"bestFriend\": \(subUserJSON)}}"
+		let userJSONString: String? = "{\"username\":\"\(username)\",\"identifier\":\"\(identifier)\",\"photoCount\":\(photoCount),\"age\":\(age),\"drinker\":\(drinker),\"smoker\":\(smoker), \"sex\":\"\(sex.rawValue)\", \"arr\":[ \"bla\", true, 42 ], \"dict\":{ \"key1\" : \"value1\", \"key2\" : false, \"key3\" : 142 }, \"arrOpt\":[ \"bla\", true, 42 ], \"dictOpt\":{ \"key1\" : \"value1\", \"key2\" : false, \"key3\" : 142 }, \"weight\": \(weight), \"float\": \(float), \"friend\": \(subUserJSON), \"friendDictionary\":{ \"bestFriend\": \(subUserJSON)}}"
 		
-		let user = userMapper.map(JSONString: userJSONString)!
+		let user = userMapper.map(JSONString: userJSONString!)!
 		
 		XCTAssertNotNil(user)
 		XCTAssertEqual(username, user.username)
@@ -115,7 +107,7 @@ class ObjectMapperTests: XCTestCase {
         let identifier = "user8723"
         let photoCount = 13
         let age = 1227
-        let weight = 180.51
+        let weight = 123.23
         let float: Float = 123.231
         let drinker = true
         let smoker = false
@@ -561,7 +553,6 @@ class User: Mappable {
     var drinker: Bool = false
     var smoker: Bool?
   	var sex: Sex?
-	var canDrive: Bool?
     var arr: [Any] = []
     var arrOptional: [Any]?
     var dict: [String : Any] = [:]
@@ -589,7 +580,6 @@ class User: Mappable {
 		drinker          <- map["drinker"]
 		smoker           <- map["smoker"]
 		sex              <- map["sex"]
-		canDrive		 <- map["canDrive"]
 		arr              <- map["arr"]
 		arrOptional      <- map["arrOpt"]
 		dict             <- map["dict"]
