@@ -101,12 +101,14 @@ public final class Mapper<N: BaseMappable> {
 				object.mapping(map: map)
 				return object
 			}
-		} else if let klass = N.self as? Mappable.Type { // Check if object is Mappable
+		}
+        if let klass = N.self as? Mappable.Type { // Check if object is Mappable
 			if var object = klass.init(map: map) as? N {
 				object.mapping(map: map)
 				return object
 			}
-		} else if let klass = N.self as? ImmutableMappable.Type { // Check if object is ImmutableMappable
+		}
+        if let klass = N.self as? ImmutableMappable.Type { // Check if object is ImmutableMappable
 			do {
 				return try klass.init(map: map) as? N
 			} catch let error {
@@ -122,9 +124,6 @@ public final class Mapper<N: BaseMappable> {
 				NSLog("\(error)")
 				#endif
 			}
-		} else {
-			// Ensure BaseMappable is not implemented directly
-			assert(false, "BaseMappable should not be implemented directly. Please implement Mappable, StaticMappable or ImmutableMappable")
 		}
 		
 		return nil
