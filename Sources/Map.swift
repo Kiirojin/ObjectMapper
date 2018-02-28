@@ -134,7 +134,7 @@ private func valueFor(_ keyPathComponents: ArraySlice<String>, dictionary: [Stri
 	
 	if let keyPath = keyPathComponents.first {
 		let object = dictionary[keyPath]
-		if object is NSNull {
+		if object is NSNull || object == nil {
 			return (true, nil)
 		} else if keyPathComponents.count > 1 {
             let dict = object as! [String: Any]
