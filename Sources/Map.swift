@@ -136,12 +136,10 @@ private func valueFor(_ keyPathComponents: ArraySlice<String>, dictionary: [Stri
 		let object = dictionary[keyPath]
 		if object is NSNull || object == nil {
 			return (true, nil)
-		} else if keyPathComponents.count > 1 {
-            let dict = object as! [String: Any]
+		} else if keyPathComponents.count > 1, let dict = object as? [String: Any] {
 			let tail = keyPathComponents.dropFirst()
 			return valueFor(tail, dictionary: dict)
-		} else if keyPathComponents.count > 1 {
-            let array = object as! [Any]
+		} else if keyPathComponents.count > 1, let array = object as? [Any] {
 			let tail = keyPathComponents.dropFirst()
 			return valueFor(tail, array: array)
 		} else {
